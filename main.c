@@ -50,9 +50,26 @@ int main(void)
 
     for(int i = 0; i < grade_count; i++)
     {
-        printf("Grade %d has points %d\n", i+1, student_points[i]);
+        printf("Grade %d has points %d and grades as %c\n", i+1, student_points[i], convert_to_grade(student_points[i]));
     }
 
+    char *students_grade = calloc(grade_count + 1, sizeof(*students_grade));
+    if(students_grade == NULL)
+    {
+        printf("ERROR allocating students_grade char array!\n");
+        free(students_grade);
+        free(student_points);
+        return 1;
+    }
+
+    for(int i = 0; i < grade_count; i++)
+    {
+        students_grade[i] = convert_to_grade(student_points[i]);
+    }
+
+    printf("Grades in order is %s\n", students_grade);
+
+    free(students_grade);
     free(student_points);
     return 1;
 }
